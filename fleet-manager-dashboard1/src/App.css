@@ -1,0 +1,509 @@
+@import url('https://fonts.cdnfonts.com/css/liberation-sans');
+@import url('https://fonts.cdnfonts.com/css/bebas-neue');
+
+.title {
+  padding-right: 600px;
+  padding-top: 20px;
+  width: 500px;
+}
+
+/* style for home and profile links*/
+.centered-flex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.links-container {
+  position: fixed;
+  top: 20px;
+  right: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+  border: 2px solid #4fc2d9;
+  border-radius: 4px;
+  padding: 20px;
+  z-index: 1000;
+  background-color: #11364b;
+}
+
+/*homepage style*/
+div {
+  text-align: center;
+}
+
+body {
+  background-color: #11364b;
+}
+
+#home-button {
+  background-color: #11364b;
+  color: #4fc2d9;
+  border: #11364b;
+  padding: 15px 24px;
+  font-family: "Liberation Sans", sans-serif;
+  font-size: 18px;
+}
+
+.services {
+  color: #4fc2d9;
+  padding: 15px 24px;
+  font-family: "Liberation Sans", sans-serif;
+  font-size: 18px;
+}
+
+a:link {
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+#home-button:hover {
+  text-decoration: underline;
+}
+
+.home-menu {
+  margin: 0 auto 100px auto;
+  max-width: 90%;
+  border: 2px solid #4fc2d9;
+  border-radius: 4px;
+  padding: 20px;
+}
+
+h1 {
+  font-family: "Bebas Neue", sans-serif;
+  color: #4fc2d9;
+  font-size: 60px;
+}
+
+p {
+  font-family: "Liberation Sans", sans-serif;
+  color: #4fc2d9;
+  font-size: 20px;
+}
+
+.home-child {
+  width: 50%;
+  margin-left: 25%;
+}
+
+.company-info {
+  text-align: justify;
+  padding-left: 70px;
+}
+
+h2 {
+  font-family: 'Bebas Neue', sans-serif;
+  color: #1c6b7c;
+  font-size: 30px;
+}
+
+#logo img {
+  max-width: 280px;
+  height: auto; /* Maintain aspect ratio */
+  display: block;
+  margin: 0 auto;
+}
+
+.centered-image img {
+  max-width: 50%; /* Adjust this value as needed */
+  height: auto;
+  display: block;
+  margin: auto;
+}
+
+footer {
+  background-color: #1c6b7c;
+  font-family: "Liberation Sans", sans-serif;
+  color: #4fc2d9;
+  padding: 20px 0;
+  text-align: center;
+  margin-top: 700px;
+}
+
+.footer-content {
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-start;
+  max-width: 1200px;
+  margin: auto;
+  flex-wrap: wrap; /* Ensures responsiveness */
+}
+
+footer h3 {
+  margin-bottom: 15px;
+  font-family: "Liberation Sans", sans-serif;
+}
+
+footer p,
+footer a {
+  color: #4fc2d9;
+  font-family: "Liberation Sans", sans-serif;
+  margin-bottom: 10px;
+  text-decoration: none;
+}
+
+footer a:hover {
+  text-decoration: underline;
+}
+
+/* ihaul.html style */
+
+.button-container {
+  display: flex;
+  flex-direction: column; /* Stack buttons vertically */
+  gap: 10px; /* Space between buttons */
+  padding-top: 15px;
+  padding-bottom: 200px;
+}
+
+.centered-button {
+  background-color: #11364b;
+  color: #4fc2d9;
+  border: 2px solid #4fc2d9;
+  border-radius: 4px;
+  font-size: 20px;
+  padding: 30px 5px;
+  cursor: pointer;
+  width: 350px;
+  margin: 0 auto;
+}
+
+.centered-button:hover {
+  background-color: #1c6b7c;
+}
+
+.ihaul-style {
+  text-align: left;
+  padding-left: 5%;
+}
+
+#selection {
+  font-family: 'Bebas Neue', sans-serif;
+  color: #1c6b7c;
+  font-size: 27px;
+  text-align: center;
+  padding-top: 45px;
+}
+
+/* login style */
+.login-div {
+  margin: auto;
+  width: 300px;
+  border: 5px solid #1c6b7c;
+  padding: 35px;
+  color: #4fc2d9;
+  font-family: "Liberation Sans", sans-serif;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 355px;
+}
+
+.login-div * {
+  border: none;
+}
+
+/* style for input fields */
+input[type="text"],
+input[type="password"] {
+  width: 100%; /* Full width of the container */
+  padding: 10px; /* Padding inside the input fields */
+  margin: 10px 0 20px 0; /* Space between input fields */
+  border: 1px solid #1c6b7c; /* Light border for the inputs */
+  border-radius: 4px; /* Slightly rounded corners for the input fields */
+  box-sizing: border-box; /* Includes padding in width */
+}
+
+/* style for buttons */
+#login-button,
+#signup-button {
+  width: 100%; /* Full width of the container */
+  padding: 10px; /* Padding inside the button */
+  margin: 10px 0; /* Space between the button and the link */
+  border: 1px solid #1c6b7c; /* Light border for the button */
+  border-radius: 4px; /* Slightly rounded corners for the button */
+  background-color: #11364b; /* Background color for the button */
+  color: #4fc2d9; /* Text color for the button */
+  font-size: 13px;
+  cursor: pointer;
+}
+
+#login-button:hover,
+#signup-button:hover {
+  background-color: #1c6b7c;
+}
+
+/* style for toggle link/button */
+.toggle-form-button,
+.toggle-form {
+  background-color: transparent; /* No background for a text-like button */
+  color: #4fc2d9; /* Text color */
+  border: none; /* No border */
+  box-shadow: none; /* No shadow */
+  padding: 10px; /* Padding for spacing */
+  cursor: pointer; /* Cursor to indicate clickable */
+  font-family: "Liberation Sans", sans-serif;
+  font-size: 13px;
+  text-align: center; /* Center the text */
+  display: block; /* Block display to allow centering text */
+  margin-top: 5px; /* Space from the form above */
+  position: static;
+}
+
+.toggle-form-button:hover,
+.toggle-form:hover {
+  text-decoration: underline;
+}
+
+#forgot-div {
+  margin-top: 15px;
+}
+
+#forgot-link {
+  color: #4fc2d9;
+}
+
+/*medmobile style */
+
+.search-bar {
+  background-color: #d3d3d3;
+  color: #000000;
+  padding: 10px 20px;
+  margin: 0 auto 50px auto;
+  width: 87%;
+  height: 25px;
+}
+
+.float-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 20px;
+  margin: 65px;
+}
+.card {
+  margin: 10px;
+  background-color: white;
+  padding-bottom: 300px;
+}
+
+/*nomad*/
+ul {
+  list-style-type: none;
+}
+body {
+  font-family: Verdana, sans-serif;
+}
+
+.month {
+  padding: 70px 25px;
+  width: 50%;
+  height: 0.5px;
+  background: #4fc2d9;
+  text-align: center;
+  margin-left: 350px;
+}
+
+.month ul {
+  margin: 0;
+  padding: 0;
+}
+
+.month ul li {
+  color: white;
+  font-size: 20px;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+}
+
+.month .prev {
+  float: left;
+  padding-top: 10px;
+}
+
+.month .next {
+  float: right;
+  padding-top: 10px;
+}
+
+.weekdays {
+  margin: 0;
+  padding: 10px 0;
+  background-color: #ddd;
+  width: 53.43%;
+  margin-left: 350px;
+}
+
+.weekdays li {
+  display: inline-block;
+  width: 13.6%;
+  color: #666;
+  text-align: center;
+}
+
+.days {
+  padding: 10px 0;
+  background: #eee;
+  margin: 0;
+  width: 53.43%;
+  margin-left: 350px;
+}
+
+.days li {
+  list-style-type: none;
+  display: inline-block;
+  width: 13.6%;
+  text-align: center;
+  margin-bottom: 5px;
+  font-size: 12px;
+  color: #777;
+}
+
+.days li .active {
+  padding: 5px;
+  background: #4fc2d9;
+  color: white !important;
+}
+.reserve-button {
+  display: block;
+  margin: 70px auto;
+  padding: 10px 20px;
+  background-color: #11364b;
+  color: #4fc2d9;
+  font-family: "Liberation Sans", sans-serif;
+  cursor: pointer;
+  border-radius: 4px;
+  border: 2px solid #4fc2d9;
+}
+
+/* sign-up style*/
+
+.signup-div a {
+  font-size: 13px;
+  width: 100px;
+  margin-top: 200px;
+  padding: 0;
+}
+
+.signup-group label {
+  padding: 10px;
+}
+
+#signup-button,
+#signout {
+  border-radius: 4px;
+  background-color: #11364b;
+  color: #4fc2d9;
+  border: 2px solid #4fc2d9;
+  font-size: 13px;
+  padding: 10px 30px;
+  cursor: pointer;
+}
+
+#signup-button:hover {
+  background-color: #1c6b7c;
+}
+
+#login-signup {
+  padding: 20px;
+}
+
+/* profile style*/
+#profile-container {
+  padding: 100px;
+}
+
+.profile-container {
+  border: #1c6b7c solid 2px;
+  border-radius: 3px;
+  margin-left: 300px;
+  margin-right: 300px;
+  margin-bottom: 10px;
+  text-align: left;
+  padding-left: 30px;
+}
+
+#profile-container button {
+  margin-top: 40px;
+}
+
+.faq-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 50vh;
+  max-width: 800px;
+  margin: auto;
+  padding: 20px;
+}
+
+.faq-item {
+  width: 100%;
+  margin-bottom: 10px;
+  border: #1c6b7c solid 2px;
+  border-radius: 4px;
+}
+
+.faq-question {
+  cursor: pointer;
+  padding: 10px;
+  background-color: #1c6b7c;
+  text-align: center;
+  width: 100%;
+  color: #4FC2D9;
+  font-size: 1.125rem;
+  font-family: "Liberation Sans", sans-serif;
+}
+
+.faq-answer {
+  padding: 10px;
+  background-color: #11364b;
+  text-align: left;
+  width: 100%;
+  color: #4FC2D9;
+  font-family: "Liberation Sans", sans-serif;
+}
+
+.name-section {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  padding: 20px;
+}
+
+.name-section img {
+  max-width: 50%;
+  height: auto;
+  width: auto;
+  display: block;
+  margin: 0 auto;
+  padding: 10px;
+}
+
+.name-item {
+  flex-basis: calc(50% - 40px);
+  margin: 20px;
+  background-color: #1c6b7c ;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  padding: 15px;
+}
+
+.name-item h3 {
+  margin: 0 0 10px 0;
+  color: #11364b;
+  font-family: "Liberation Sans", sans-serif;
+}
+
+.name-item p {
+  margin: 0;
+  color: #4FC2D9 ;
+  font-family: "Liberation Sans", sans-serif;
+}
