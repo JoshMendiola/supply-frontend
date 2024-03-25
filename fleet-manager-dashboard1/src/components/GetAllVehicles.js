@@ -5,10 +5,9 @@ function GetAllVehicles() {
 
     useEffect(() => {
         const fetchVehicles = () => {
-            fetch('https://team-11.supply.seuswe.rocks//api/get-all-vehicles')
+            fetch('https://team-11.supply.seuswe.rocks/api/get-all-vehicles')
                 .then(response => response.json())
                 .then(data => {
-                    // Ensure we are accessing the 'Vehicles' key from the response
                     if (data.Vehicles) {
                         setVehicles(data.Vehicles);
                     } else {
@@ -18,24 +17,36 @@ function GetAllVehicles() {
                 .catch(error => console.error('Error fetching data:', error));
         };
 
-        fetchVehicles(); // Fetch immediately on component mount
-        const interval = setInterval(fetchVehicles, 1000); // Then fetch every 1000 milliseconds (1 second)
+        fetchVehicles();
+        const interval = setInterval(fetchVehicles, 1000);
 
-        return () => clearInterval(interval); // Cleanup the interval on component unmount
+        return () => clearInterval(interval);
     }, []);
 
 
     return (
         <div>
-            <h1>Live Vehicle Data</h1>
-            <ul>
+            <h2>Live Vehicle Data</h2>
+            <table className="vehicle-data">
+                <thead>
+                <tr>
+                    <th>Latitude</th>
+                    <th>Longitude</th>
+                    <th>Type</th>
+                    <th>Speed</th>
+                </tr>
+                </thead>
+                <tbody>
                 {vehicles.map((vehicle, index) => (
-                    <li key={index}>
-                        Latitude: {vehicle.current_lat}, Longitude: {vehicle.current_lon},
-                        Type: {vehicle.vehicle_type}, Speed: {vehicle.speed}
-                    </li>
+                    <tr key={index}>
+                        <td>{vehicle.current_lat}</td>
+                        <td>{vehicle.current_lon}</td>
+                        <td>{vehicle.vehicle_type}</td>
+                        <td>{vehicle.speed}</td>
+                    </tr>
                 ))}
-            </ul>
+                </tbody>
+            </table>
         </div>
     );
 }

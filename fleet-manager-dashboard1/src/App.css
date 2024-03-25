@@ -507,3 +507,9 @@ body {
   color: #4FC2D9 ;
   font-family: "Liberation Sans", sans-serif;
 }
+
+.vehicle-data{
+  color: #dddddd;
+  margin-left: auto;
+  margin-right: auto;
+}

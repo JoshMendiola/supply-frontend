@@ -16,9 +16,9 @@ function App() {
       <AuthProvider>
         <Router>
           <Routes>
-            <Route path ="home" element={<Home/>}> </Route>
+            <Route path ="/" element={<Home/>}> </Route>
             <Route path ="sidebar" element={<Sidebar/>}> </Route>
-            <Route path ="/" element={<FleetManagerDashboard/>}> </Route>
+            <Route path ="fleetdashboard" element={<FleetManagerDashboard/>}> </Route>
             <Route path ="mapcomponent" element={<MapComponent/>}> </Route>
             <Route path ="login" element={<Login/>}> </Route>
             <Route path ="register" element={<Register/>}> </Route>

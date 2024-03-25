@@ -3,10 +3,21 @@ import {useState} from "react";
 import Login from "../components/Login.js";
 import Register from "../components/Register.js";
 import Sidebar from "../components/Sidebar";
+import {useNavigate} from "react-router-dom";
 
 const Home = () => {
     const { username } = useAuth()
     const [showLogin, setShowLogin] = useState(true); // State to toggle between login and register
+    const navigate = useNavigate(); // Create an instance of useNavigate
+    // Assuming you have a method to call when login is successful
+    const onLoginSuccess = () => {
+        navigate('/dashboard'); // Redirect to the dashboard or another page
+    };
+
+    // Assuming you have a method to call when registration is successful
+    const onRegisterSuccess = () => {
+        navigate('/dashboard'); // Redirect to the dashboard or another page
+    };
 
     return (
         <>
@@ -23,7 +34,7 @@ const Home = () => {
                     <div className="login-div">
                         {showLogin ? (
                             <>
-                                <Login/>
+                                <Login onSuccess={onLoginSuccess}/>
                                 {/* Add a button or a link that when clicked, will change showLogin to false */}
                                 <button onClick={() => setShowLogin(false)} className="toggle-form">
                                     Don't have an account? Create one
@@ -31,7 +42,7 @@ const Home = () => {
                             </>
                         ) : (
                             <>
-                                <Register/>
+                                <Register onSuccess={onRegisterSuccess}/>
                                 {/* Add a button or a link that when clicked, will change showLogin to true */}
                                 <button onClick={() => setShowLogin(true)} className="toggle-form">
                                     Have an account? Login
@@ -46,6 +57,4 @@ const Home = () => {
         </>
     );
 }
-
-
 export default Home;
