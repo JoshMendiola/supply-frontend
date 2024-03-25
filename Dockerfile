@@ -6,7 +6,7 @@ COPY package*.json ./
 
 RUN npm install
 
-COPY . .
+COPY fleet-manager-dashboard1 .
 
 EXPOSE 3000
 
