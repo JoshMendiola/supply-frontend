@@ -507,11 +507,10 @@ body {
   font-family: "Liberation Sans", sans-serif;
 }
 
-.vehicle-data{
+.vehicle-data {
   color: #dddddd;
   margin-left: auto;
   margin-right: auto;
-<<<<<<< HEAD
   margin-bottom: 10%;
 }
 
@@ -519,6 +518,4 @@ body {
   margin-left: auto;
   margin-right: auto;
   border-radius: 15px;
-=======
->>>>>>> e6961cbc5ff00a9531c674709e7fe8926e167c50
 }
