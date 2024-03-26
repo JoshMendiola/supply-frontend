@@ -1,0 +1,13 @@
+image: atlassian/default-image:2
+pipelines: 
+  branches:
+    main:
+    - step:
+        name: SupplyFrontendPipeline 
+        deployment: Production
+        script:
+        - pipe: atlassian/ssh-run:0.2.2
+          variables:
+            SSH_USER: $USER
+            SERVER: $SUPPLY
+            COMMAND: '/home/team11/scripts/update_frontend.sh'

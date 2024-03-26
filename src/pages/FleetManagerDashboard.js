@@ -13,9 +13,11 @@ const DashboardPage = () => {
                     <h1 className="ihaul-style"> Dashboard</h1>
                 </div>
             </div>
+
+            <GetAllVehicles />
             <h2>Location of Vehicles</h2>
             <MapComponent/>
-            <GetAllVehicles/>
+
         </div>
     );
 };

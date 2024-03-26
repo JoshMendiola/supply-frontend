@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import React, { useContext } from 'react';
+=======
+import React from 'react';
+>>>>>>> e6961cbc5ff00a9531c674709e7fe8926e167c50
 import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 

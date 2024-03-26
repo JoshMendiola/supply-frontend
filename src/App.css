@@ -29,8 +29,6 @@
   background-color: #11364b;
 }
 
-/*homepage style
-*/
 div {
   text-align: center;
 }
@@ -513,6 +511,7 @@ body {
   color: #dddddd;
   margin-left: auto;
   margin-right: auto;
+<<<<<<< HEAD
   margin-bottom: 10%;
 }
 
@@ -520,4 +519,6 @@ body {
   margin-left: auto;
   margin-right: auto;
   border-radius: 15px;
+=======
+>>>>>>> e6961cbc5ff00a9531c674709e7fe8926e167c50
 }
