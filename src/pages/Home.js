@@ -11,12 +11,12 @@ const Home = () => {
     const navigate = useNavigate(); // Create an instance of useNavigate
     // Assuming you have a method to call when login is successful
     const onLoginSuccess = () => {
-        navigate('/dashboard'); // Redirect to the dashboard or another page
+        navigate('/fleetdashboard'); // Redirect to the dashboard or another page
     };
 
     // Assuming you have a method to call when registration is successful
     const onRegisterSuccess = () => {
-        navigate('/dashboard'); // Redirect to the dashboard or another page
+        navigate('/fleetdashboard'); // Redirect to the dashboard or another page
     };
 
     return (

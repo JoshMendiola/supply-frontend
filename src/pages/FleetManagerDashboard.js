@@ -14,9 +14,9 @@ const DashboardPage = () => {
                 </div>
             </div>
 
-            <GetAllVehicles />
             <h2>Location of Vehicles</h2>
             <MapComponent/>
+            <GetAllVehicles/>
 
         </div>
     );
