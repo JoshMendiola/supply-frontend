@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useAuth} from "../context/AuthContext";
 
-const Login = () => {
+const Login = ({ onLoginSuccess }) => {
     const { login } = useAuth();
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -39,6 +39,7 @@ const Login = () => {
                     login(username, data.access_token);
                     setUsername('');
                     setPassword('');
+                    onLoginSuccess();
                 } else {
                     // Display an error message to the user
                     alert('Login failed: ' + data.msg);
