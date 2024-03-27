@@ -11,12 +11,12 @@ const Home = () => {
     const navigate = useNavigate(); // Create an instance of useNavigate
     // Assuming you have a method to call when login is successful
     const onLoginSuccess = () => {
-        navigate('/fleetdashboard'); // Redirect to the dashboard or another page
+        navigate('/fleetdashboard'); // Redirect to the dashboard
     };
 
     // Assuming you have a method to call when registration is successful
     const onRegisterSuccess = () => {
-        navigate('/fleetdashboard'); // Redirect to the dashboard or another page
+        navigate('/fleetdashboard'); // Redirect to the dashboard
     };
 
     return (
@@ -34,7 +34,7 @@ const Home = () => {
                     <div className="login-div">
                         {showLogin ? (
                             <>
-                                <Login onSuccess={onLoginSuccess}/>
+                                <Login onLoginSuccess={onLoginSuccess}/>
                                 {/* Add a button or a link that when clicked, will change showLogin to false */}
                                 <button onClick={() => setShowLogin(false)} className="toggle-form">
                                     Don't have an account? Create one
@@ -42,7 +42,7 @@ const Home = () => {
                             </>
                         ) : (
                             <>
-                                <Register onSuccess={onRegisterSuccess}/>
+                                <Register onRegisterSuccess={onRegisterSuccess}/>
                                 {/* Add a button or a link that when clicked, will change showLogin to true */}
                                 <button onClick={() => setShowLogin(true)} className="toggle-form">
                                     Have an account? Login

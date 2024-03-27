@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import {useAuth} from "../context/AuthContext";
 
-const Register = () => {
+const Register = ({ onRegisterSuccess }) => {
     const { login } = useAuth();
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
@@ -43,6 +43,7 @@ const Register = () => {
 
                 // Assuming the login function updates the context and local storage appropriately
                 login(username, data.access_token); // Use the login method from your context
+                onRegisterSuccess();
             } else {
                 // Display an error message to the user
                 alert(data.msg);
