@@ -38,7 +38,7 @@ const MapComponent = () => {
             const newMarkers = vehicleData.map(vehicle => {
                 console.log('Vehicle location:', vehicle.current_lat, vehicle.current_lon); //DELETE MEEEEE
                 const marker = new mapboxgl.Marker({ "iconSize": [40, 40] }) // Set icon size width and height in pixels
-                    .setLngLat([vehicle.current_lon, vehicle.current_lat])
+                    .setLngLat([vehicle.current_lat, vehicle.current_lon])
                     .addTo(map.current);
                 return marker;
             });
@@ -49,6 +49,7 @@ const MapComponent = () => {
 
         const fetchDataAndUpdateMarkers = async () => {
             const data = await fetchVehicleData();
+            console.log("Updating map")
             updateMarkers(data);
         };
 
