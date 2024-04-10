@@ -45,6 +45,7 @@ function GetAllVehicles() {
                         <td>{vehicle.vehicle_type}</td>
                         <td>{vehicle.speed}</td>
                         <td>{vehicle.battery_percentage}</td>
+                        <td>{vehicle.status}</td>
                     </tr>
                 ))}
                 </tbody>
