@@ -31,11 +31,11 @@ function GetAllVehicles() {
             <table className="vehicle-data">
                 <thead>
                 <tr>
+                    <th>Battery Percentage</th>
                     <th>Latitude</th>
                     <th>Longitude</th>
                     <th>Type</th>
                     <th>Speed</th>
-                    <th>Battery Percentage</th>
                     <th>Status</th>
 
                 </tr>
@@ -43,11 +43,11 @@ function GetAllVehicles() {
                 <tbody>
                 {vehicles.map((vehicle, index) => (
                     <tr key={index}>
+                        <td>{vehicle.battery_percentage}</td>
                         <td>{vehicle.current_lat}</td>
                         <td>{vehicle.current_lon}</td>
                         <td>{vehicle.vehicle_type}</td>
                         <td>{vehicle.speed}</td>
-                        <td>{vehicle.battery_percentage}</td>
                         <td>{vehicle.status}</td>
                     </tr>
                 ))}
