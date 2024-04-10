@@ -35,6 +35,9 @@ function GetAllVehicles() {
                     <th>Longitude</th>
                     <th>Type</th>
                     <th>Speed</th>
+                    <th>Battery Percentage</th>
+                    <th>Status</th>
+
                 </tr>
                 </thead>
                 <tbody>
