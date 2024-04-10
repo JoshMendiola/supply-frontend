@@ -9,6 +9,7 @@ function GetAllVehicles() {
                 .then(response => response.json())
                 .then(data => {
                     if (data.Vehicles) {
+                        console.log(data.Vehicles);
                         setVehicles(data.Vehicles);
                     } else {
                         console.error('Vehicles key not found in response');
@@ -43,6 +44,7 @@ function GetAllVehicles() {
                         <td>{vehicle.current_lon}</td>
                         <td>{vehicle.vehicle_type}</td>
                         <td>{vehicle.speed}</td>
+                        <td>{vehicle.battery_percentage}</td>
                     </tr>
                 ))}
                 </tbody>
