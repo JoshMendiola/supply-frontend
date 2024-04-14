@@ -60,7 +60,16 @@ const MapComponent = () => {
         return () => clearInterval(intervalId);
     }, []);
 
-    return <div ref={mapContainer} style={{ height: '300px', width: '30%', marginLeft: '60%' }} />;
+    return (
+    <div style={{ display: 'flex' }}>
+      <div style={{ width: '20%', display: 'flex', flexDirection: 'row', gap: '70px', color: '#1c6b7c', marginTop: '-5%' }}>
+          <h3 style={{textAlign: 'center', marginLeft: '350px'}}>Pending trips</h3>
+          <h3>Current trips</h3>
+        <h3>Maintenance</h3>
+      </div>
+      <div ref={mapContainer} style={{ height: '300px', width: '30%', marginLeft: '40%'}} />
+    </div>
+  );
 };
 
 export default MapComponent;
