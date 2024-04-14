@@ -8,54 +8,67 @@ mapboxgl.accessToken = 'pk.eyJ1Ijoiamdpcm9ubG8iLCJhIjoiY2x1NjJ0ZHVsMXdycDJtbnkyc
 const MapComponent = () => {
     const mapContainer = useRef(null);
     const map = useRef(null);
-    const [markers, setMarkers] = useState([]);
+    const [markers, setMarkers] = useState({});
+    const markerRef = useRef({});
 
     useEffect(() => {
-        if (map.current) return;
-        // Austin, TX coordinates
-        const austinLat = 30.2672;
-        const austinLon = -97.7431;
+        if (map.current) return; // Initialize the map only once
+
+        // Map initialization
         map.current = new mapboxgl.Map({
             container: mapContainer.current,
             style: 'mapbox://styles/mapbox/streets-v11',
-            center: [austinLon, austinLat], // Set to Austin's coordinates
-            zoom: 10 // Adjust the zoom level as needed
+            center: [-97.7431, 30.2672], // Example coordinates (Austin, TX)
+            zoom: 10
         });
 
-        // Function to update markers on the map
+        return () => {
+            Object.values(markerRef.current).forEach(marker => marker.remove());
+        };
+    }, []);
+
+    useEffect(() => {
         const updateMarkers = (vehicleData) => {
-            if (!Array.isArray(vehicleData) || vehicleData.length === 0) {
-                console.error('Invalid or empty vehicleData:', vehicleData);
-                return; // Exit the function if vehicleData is not an array or is empty
-            }
-
-            // Log the data to ensure it's in the expected format
-            console.log('Vehicle data:', vehicleData);
-
-            // Remove existing markers
-            markers.forEach(marker => marker.remove());
-
-            const newMarkers = vehicleData.map(vehicle => {
-                console.log('Vehicle location:', vehicle.current_lat, vehicle.current_lon); //DELETE MEEEEE
-                const marker = new mapboxgl.Marker({ "iconSize": [40, 40] }) // Set icon size width and height in pixels
-                    .setLngLat([vehicle.current_lon, vehicle.current_lat])
-                    .addTo(map.current);
-                return marker;
+            vehicleData.forEach(vehicle => {
+                const { current_lat, current_lon } = vehicle;
+                if (markerRef.current[vehicle.id]) {
+                    // Move existing marker
+                    animateMarker(vehicle.id, [current_lon, current_lat]);
+                } else {
+                    // Create new marker
+                    const marker = new mapboxgl.Marker({ "iconSize": [40, 40] })
+                        .setLngLat([current_lon, current_lat])
+                        .addTo(map.current);
+                    markerRef.current[vehicle.id] = marker;
+                }
             });
-
-            setMarkers(newMarkers);
         };
 
+        const animateMarker = (id, newCoords) => {
+            const marker = markerRef.current[id];
+            const oldCoords = marker.getLngLat();
+            const steps = 20;
+            let step = 0;
+
+            const intervalId = setInterval(() => {
+                step++;
+                const newLat = oldCoords.lat + (newCoords[1] - oldCoords.lat) * (step / steps);
+                const newLon = oldCoords.lng + (newCoords[0] - oldCoords.lng) * (step / steps);
+                marker.setLngLat([newLon, newLat]);
+
+                if (step === steps) {
+                    clearInterval(intervalId);
+                }
+            }, 50); // Adjust timing to control speed of animation
+        };
 
         const fetchDataAndUpdateMarkers = async () => {
             const data = await fetchVehicleData();
-            console.log("Updating map")
             updateMarkers(data);
         };
 
         fetchDataAndUpdateMarkers();
-        // Set interval to fetch vehicle data periodically
-        const intervalId = setInterval(fetchDataAndUpdateMarkers, 1000); // Adjust the interval as needed
+        const intervalId = setInterval(fetchDataAndUpdateMarkers, 1000);
 
         return () => clearInterval(intervalId);
     }, []);
