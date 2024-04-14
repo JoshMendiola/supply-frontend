@@ -60,7 +60,7 @@ const MapComponent = () => {
         return () => clearInterval(intervalId);
     }, []);
 
-    return <div ref={mapContainer} style={{ height: '400px', width: '70%' }} />;
+    return <div ref={mapContainer} style={{ height: '300px', width: '30%', marginLeft: '60%' }} />;
 };
 
 export default MapComponent;

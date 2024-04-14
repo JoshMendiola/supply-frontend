@@ -3,13 +3,30 @@ import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
-const Sidebar = () => {
+const Sidebar = ({ position }) => {
     const { isLoggedIn, username } = useAuth()
 
+    const sidebarStyle = {
+        position: 'fixed',
+        top: 0,
+        bottom: 0,
+        [position]: 0,
+        width: '200px',
+        padding: '20px',
+    };
+
+    const linkContainerStyle = {
+        display: 'flex',
+        flexDirection: 'row',
+        marginLeft: '550%',
+    };
+
     return (
-        <div className="links-container">
-            <Link to={"/"} className="services">Home</Link>
-            {isLoggedIn && <Link to={"/fleetdashboard"} className="services">Dashboard</Link>}
+        <div style={sidebarStyle}>
+            <div style={linkContainerStyle}>
+                <Link to={"/"} className="services">Home</Link>
+                {isLoggedIn && <Link to={"/fleetdashboard"} className="services">Dashboard</Link>}
+            </div>
         </div>
     );
 };
