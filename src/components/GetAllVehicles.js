@@ -40,7 +40,6 @@ function GetAllVehicles() {
         }
     };
 
-
     const handleUpdateVehicle = (vehicleId, currentStatus) => {
         const url = 'https://team-11.supply.seuswe.rocks/api/update-vehicle-status';
         const newStatus = currentStatus === 'STOPPED' ? 'RESUME' : 'STOPPED';
@@ -62,9 +61,19 @@ function GetAllVehicles() {
             });
     };
 
+    const getBatteryStyle = (percentage) => {
+        if (percentage > 65) {
+            return { color: '#34cf23' };
+        } else if (percentage > 30) {
+            return { color: '#d4c92f' };
+        } else {
+            return { color: '#cf2d21' };
+        }
+    };
+
     return (
         <div>
-            <table className="vehicle-data">
+            <table className="vehicle-data" style={{ width: '100%', borderCollapse: 'collapse' }}>
                 <thead>
                 <tr>
                     <th>Battery Percentage</th>
@@ -78,8 +87,8 @@ function GetAllVehicles() {
                 </thead>
                 <tbody>
                 {vehicles.map((vehicle, index) => (
-                    <tr key={index}>
-                        <td>{vehicle.battery_percentage}</td>
+                    <tr key={index} style={{ border: '3px solid black', padding: '5px' }}>
+                        <td style={getBatteryStyle(vehicle.battery_percentage)}>{vehicle.battery_percentage + '%'}</td>
                         <td>{parseFloat(vehicle.current_lat).toFixed(6)}</td>
                         <td>{parseFloat(vehicle.current_lon).toFixed(6)}</td>
                         <td>{getVehicleIcon(vehicle.vehicle_type)}</td>
@@ -91,9 +100,12 @@ function GetAllVehicles() {
                                 style={{
                                     color: 'white',
                                     backgroundColor: vehicle.status === 'STOPPED' ? 'red' : 'green',
+                                    border: 'none',
+                                    padding: '10px 20px',
+                                    cursor: 'pointer'
                                 }}
                             >
-                                {vehicle.status === 'STOPPED' ? 'STOPPED' : 'GO'}
+                                {vehicle.status === 'STOPPED' ? 'Resume' : 'Stop'}
                             </button>
                         </td>
                     </tr>
