@@ -4,32 +4,36 @@ import IHaulIcon from "../images/icons/IHaulIcon.png";
 import NomadIcon from "../images/icons/NomadIcon.png";
 import UnknownIcon from "../images/icons/UnknownIcon.png";
 
-function PendingTrips() {
-    const [pendingTrips, setPendingTrips] = useState([]);
+function TripsInProgressComponent() {
+    const [tripsInProgress, setTripsInProgress] = useState([]);
 
     useEffect(() => {
-        const fetchPendingTrips = () => {
-            fetch('https://team-11.supply.seuswe.rocks/api/get-all-pending-trips')
+        const fetchTripsInProgress = () => {
+            fetch('https://team-11.supply.seuswe.rocks/api/get-trips-in-progress')
                 .then(response => response.json())
                 .then(data => {
-                    setPendingTrips(data.trips.map(trip => {
-                        const timestamp = new Date(trip.timestamp + 'Z'); // Ensure UTC by adding 'Z'
-                        trip.localTimestamp = timestamp.toLocaleString(); // Converts to local time string
-                        return trip;
-                    }));
+                    if (data.Vehicles) { // Assuming the data structure is similar and uses 'Vehicles' key
+                        setTripsInProgress(data.Vehicles.map(trip => {
+                            const timestamp = new Date(trip.timestamp + 'Z'); // Adjust if the data structure is different
+                            trip.localTimestamp = timestamp.toLocaleString(); // Converts UTC to local string
+                            return trip;
+                        }));
+                    } else {
+                        console.error('Vehicles key not found in response');
+                    }
                 })
                 .catch(error => console.error('Error fetching data:', error));
         };
 
-        fetchPendingTrips();
-        const fetchInterval = setInterval(fetchPendingTrips, 1000); // Re-fetches every 1000 ms (1 second)
+        fetchTripsInProgress();
+        const fetchInterval = setInterval(fetchTripsInProgress, 1000); // Re-fetches every 1000 ms
         return () => clearInterval(fetchInterval);
     }, []);
 
     const getTimeAgo = (isoString) => {
-        const past = new Date(isoString + 'Z'); // Parse as UTC
-        const now = new Date(); // Current time in user's local time
-        const diff = now - past; // Difference in milliseconds
+        const past = new Date(isoString + 'Z');
+        const now = new Date();
+        const diff = now - past;
 
         const minutes = Math.floor(diff / 60000);
         const hours = Math.floor(diff / 3600000);
@@ -66,7 +70,7 @@ function PendingTrips() {
                 </tr>
                 </thead>
                 <tbody>
-                {pendingTrips.map((trip, index) => (
+                {tripsInProgress.map((trip, index) => (
                     <tr key={index}>
                         <td style={{ border: '2px solid black', padding: '5px' }}>{trip.localTimestamp}</td>
                         <td style={{ border: '2px solid black', padding: '5px' }}>{getPluginIcon(trip.plugin)}</td>
@@ -80,4 +84,4 @@ function PendingTrips() {
     );
 }
 
-export default PendingTrips;
+export default TripsInProgressComponent;

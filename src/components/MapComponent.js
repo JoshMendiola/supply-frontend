@@ -11,7 +11,7 @@ const MapComponent = () => {
     const markers = useRef({});
 
     useEffect(() => {
-        if (map.current) return;
+        if (map.current) return; // Prevent reinitializing the map
 
         map.current = new mapboxgl.Map({
             container: mapContainer.current,
@@ -42,7 +42,7 @@ const MapComponent = () => {
         const newMarkers = {};
 
         vehicleData.forEach(vehicle => {
-            const { current_lat, current_lon, id, vehicle_type } = vehicle;
+            const { current_lat, current_lon, id, vehicle_type, battery_percentage, status } = vehicle;
             const color = getColorByPlugin(vehicle_type);
 
             if (markers.current[id]) {
@@ -59,8 +59,16 @@ const MapComponent = () => {
                 el.style.height = '30px';
                 el.style.borderRadius = '50%'; // Circular markers
 
+                // Popup content, now including Vehicle ID
+                const popup = new mapboxgl.Popup({ offset: 25 }).setHTML(
+                    `<strong>Type:</strong> ${vehicle_type}<br>
+                     <strong>Battery:</strong> ${battery_percentage}%<br>
+                     <strong>Status:</strong> ${status}`
+                );
+
                 const marker = new mapboxgl.Marker(el)
                     .setLngLat([current_lon, current_lat])
+                    .setPopup(popup)  // Attach popup to marker
                     .addTo(map.current);
                 newMarkers[id] = marker;
             }

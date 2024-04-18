@@ -5,13 +5,15 @@ import Sidebar from "../components/Sidebar";
 import PendingTripsComponent from "../components/PendingTripsComponent";
 import DashboardItem from '../components/DashboardItem';
 import VehicleStatusChart from "../components/VehicleStatusChart";
+import TripsByPluginChart from "../components/TripsByPluginChart";
 
 const DashboardPage = () => {
     const [items, setItems] = useState([
         { id: 'map', label: 'Map', Component: MapComponent },
         { id: 'trips', label: 'Pending Trips', Component: PendingTripsComponent },
         { id: 'vehicles', label: 'Live Vehicle Data', Component: GetAllVehicles },
-        { id: 'vehiclechart', label: 'Vehicles by Status', Component: VehicleStatusChart}
+        { id: 'vehiclechart', label: 'Vehicles by Status', Component: VehicleStatusChart},
+        { id: 'tripsbypluginchart', label: 'Trips By Plugin', Component: TripsByPluginChart}
     ]);
 
     const handleDragOver = e => {
