@@ -432,6 +432,10 @@ body {
   margin-top: 40px;
 }
 
+.sidebarStyle {
+  border:4px white;
+}
+
 .faq-container {
   display: flex;
   flex-direction: column;
@@ -554,6 +558,16 @@ body {
 
 .dashboard-item:active {
   opacity: 1 !important;
+}
+
+.marker {
+  display: block;
+  position: absolute;
+  cursor: pointer;
+  width: 30px;
+  height: 30px;
+  opacity: 50%;
+  border-radius: 50%;
 }
 
 @media (max-width: 768px) {
