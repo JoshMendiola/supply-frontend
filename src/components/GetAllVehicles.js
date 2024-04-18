@@ -9,7 +9,6 @@ function GetAllVehicles() {
                 .then(response => response.json())
                 .then(data => {
                     if (data.Vehicles) {
-                        console.log(data.Vehicles);
                         setVehicles(data.Vehicles);
                     } else {
                         console.error('Vehicles key not found in response');
@@ -27,7 +26,6 @@ function GetAllVehicles() {
 
     return (
         <div>
-            <h2>Live Vehicle Data</h2>
             <table className="vehicle-data">
                 <thead>
                 <tr>

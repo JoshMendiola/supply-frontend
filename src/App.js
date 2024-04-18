@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import './App.css'
 import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
-import FleetManagerDashboard from "./pages/FleetManagerDashboard.js";
+import FleetManagerDashboard from "./pages/DashboardPage.js";
 import MapComponent from "./components/MapComponent.js";
 import Home from "./pages/Home.js";
 import Login from "./components/Login.js";
