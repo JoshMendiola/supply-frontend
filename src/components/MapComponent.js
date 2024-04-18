@@ -1,67 +1,82 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import mapboxgl from 'mapbox-gl';
-import { fetchVehicleData } from './VehicleService'; // adjust the path as needed
+import { fetchVehicleData } from './VehicleService'; // Adjust the path as needed
 import 'mapbox-gl/dist/mapbox-gl.css';
 
-mapboxgl.accessToken = 'pk.eyJ1Ijoiamdpcm9ubG8iLCJhIjoiY2x1NjJ0ZHVsMXdycDJtbnkycWIwZXJ1cyJ9.Pc7EyDNEmBEqC8QiPjoOng';
+mapboxgl.accessToken = 'pk.eyJ1Ijoiam9zaHVhbWVuZGlvbGFtYXAiLCJhIjoiY2x2NHIwcmFoMGNxYTJrcDVxM2dkejB1aCJ9.by1L5S6qb2NABCUvKcTQQA';
 
 const MapComponent = () => {
     const mapContainer = useRef(null);
     const map = useRef(null);
-    const [markers, setMarkers] = useState({});
-    const markerRef = useRef({});
+    const markers = useRef({});
 
     useEffect(() => {
-        if (map.current) return; // Initialize the map only once
+        if (map.current) return;
 
-        // Map initialization
         map.current = new mapboxgl.Map({
             container: mapContainer.current,
             style: 'mapbox://styles/mapbox/streets-v11',
-            center: [-97.7431, 30.2672], // Example coordinates (Austin, TX)
+            center: [-97.7431, 30.2672],
             zoom: 10
         });
 
         return () => {
-            Object.values(markerRef.current).forEach(marker => marker.remove());
+            Object.values(markers.current).forEach(marker => marker.remove());
+            map.current.remove();
+            map.current = null;
         };
     }, []);
 
+    const getColorByPlugin = (vehicleType) => {
+        // Define colors based on the plugin number
+        const colors = {
+            "ihaul": '#d68829',
+            "medmobile": '#0ec3cc',
+            "nomad": '#3abd5b',
+            default: 'black',
+        };
+        return colors[vehicleType] || colors.default;
+    };
+
+    const updateMarkers = (vehicleData) => {
+        const newMarkers = {};
+
+        vehicleData.forEach(vehicle => {
+            const { current_lat, current_lon, id, vehicle_type } = vehicle;
+            const color = getColorByPlugin(vehicle_type);
+
+            if (markers.current[id]) {
+                // Update position and color if it already exists
+                markers.current[id].setLngLat([current_lon, current_lat]);
+                markers.current[id].getElement().style.backgroundColor = color;
+                newMarkers[id] = markers.current[id];
+            } else {
+                // Create a new div element for the custom marker
+                const el = document.createElement('div');
+                el.className = 'marker';
+                el.style.backgroundColor = color;
+                el.style.width = '30px';
+                el.style.height = '30px';
+                el.style.borderRadius = '50%'; // Circular markers
+
+                const marker = new mapboxgl.Marker(el)
+                    .setLngLat([current_lon, current_lat])
+                    .addTo(map.current);
+                newMarkers[id] = marker;
+            }
+        });
+
+        // Remove old markers that were not updated
+        Object.keys(markers.current).forEach(id => {
+            if (!newMarkers[id]) {
+                markers.current[id].remove();
+            }
+        });
+
+        markers.current = newMarkers;
+    };
+
     useEffect(() => {
-        const updateMarkers = (vehicleData) => {
-            vehicleData.forEach(vehicle => {
-                const { current_lat, current_lon } = vehicle;
-                if (markerRef.current[vehicle.id]) {
-                    // Move existing marker
-                    animateMarker(vehicle.id, [current_lon, current_lat]);
-                } else {
-                    // Create new marker
-                    const marker = new mapboxgl.Marker({ "iconSize": [40, 40] })
-                        .setLngLat([current_lon, current_lat])
-                        .addTo(map.current);
-                    markerRef.current[vehicle.id] = marker;
-                }
-            });
-        };
-
-        const animateMarker = (id, newCoords) => {
-            const marker = markerRef.current[id];
-            const oldCoords = marker.getLngLat();
-            const steps = 20;
-            let step = 0;
-
-            const intervalId = setInterval(() => {
-                step++;
-                const newLat = oldCoords.lat + (newCoords[1] - oldCoords.lat) * (step / steps);
-                const newLon = oldCoords.lng + (newCoords[0] - oldCoords.lng) * (step / steps);
-                marker.setLngLat([newLon, newLat]);
-
-                if (step === steps) {
-                    clearInterval(intervalId);
-                }
-            }, 50); // Adjust timing to control speed of animation
-        };
-
         const fetchDataAndUpdateMarkers = async () => {
             const data = await fetchVehicleData();
             updateMarkers(data);
@@ -69,21 +84,14 @@ const MapComponent = () => {
 
         fetchDataAndUpdateMarkers();
         const intervalId = setInterval(fetchDataAndUpdateMarkers, 1000);
-
         return () => clearInterval(intervalId);
     }, []);
 
     return (
-    <div style={{ display: 'flex' }}>
-      <div style={{ width: '20%', display: 'flex', flexDirection: 'row', gap: '70px', color: '#1c6b7c', marginTop: '-5%' }}>
-          <h3 style={{textAlign: 'center', marginLeft: '350px'}}>Pending trips</h3>
-          <h3>Current trips</h3>
-        <h3>Maintenance</h3>
-      </div>
-      <div ref={mapContainer} style={{ height: '300px', width: '30%', marginLeft: '40%'}} />
-    </div>
-  );
+        <div style={{ width: '100%', height: '300px' }}>
+            <div ref={mapContainer} style={{ width: '100%', height: '100%', minWidth: '500px' }} />
+        </div>
+    );
 };
 
 export default MapComponent;
-

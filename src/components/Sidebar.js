@@ -1,10 +1,10 @@
-import React, { useContext } from 'react';
+import React from 'react';
 
 import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
 const Sidebar = ({ position }) => {
-    const { isLoggedIn, username } = useAuth()
+    const { isLoggedIn } = useAuth()
 
     const sidebarStyle = {
         position: 'fixed',
@@ -13,6 +13,7 @@ const Sidebar = ({ position }) => {
         [position]: 0,
         width: '200px',
         padding: '20px',
+        border: '4px'
     };
 
     const linkContainerStyle = {
