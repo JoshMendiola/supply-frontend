@@ -1,14 +1,17 @@
 import React, { useEffect, useRef } from 'react';
 import mapboxgl from 'mapbox-gl';
-import { fetchVehicleData } from './VehicleService'; // Adjust the path as needed
+import { fetchVehicleData } from '../services/VehicleService';
+import { fetchBatteryData } from '../services/BatteryLocationService';
 import 'mapbox-gl/dist/mapbox-gl.css';
+import CarIcon from '../images/icons/CarIcon.png'; // Ensure this path is correct
+import BatteryIcon from '../images/icons/BatteryLocationIcon.png'; // Path to battery icon
 
 mapboxgl.accessToken = 'pk.eyJ1Ijoiam9zaHVhbWVuZGlvbGFtYXAiLCJhIjoiY2x2NHIwcmFoMGNxYTJrcDVxM2dkejB1aCJ9.by1L5S6qb2NABCUvKcTQQA';
 
 const MapComponent = () => {
     const mapContainer = useRef(null);
     const map = useRef(null);
-    const markers = useRef({});
+    const vehicleMarkers = useRef({});
 
     useEffect(() => {
         if (map.current) return; // Prevent reinitializing the map
@@ -20,86 +23,103 @@ const MapComponent = () => {
             zoom: 10
         });
 
-        return () => {
-            Object.values(markers.current).forEach(marker => marker.remove());
-            map.current.remove();
-            map.current = null;
-        };
-    }, []);
+        const updateVehicleMarkers = (vehicles) => {
+            // Clear existing vehicle markers
+            Object.keys(vehicleMarkers.current).forEach(key => {
+                vehicleMarkers.current[key].remove();
+            });
+            vehicleMarkers.current = {};
 
-    const getColorByPlugin = (vehicleType) => {
-        // Define colors based on the plugin number
-        const colors = {
-            "ihaul": '#d68829',
-            "medmobile": '#0ec3cc',
-            "nomad": '#3abd5b',
-            default: 'black',
-        };
-        return colors[vehicleType] || colors.default;
-    };
+            vehicles.forEach(vehicle => {
+                const { current_lat, current_lon, _id, vehicle_type, battery_percentage, status } = vehicle;
+                const color = getColorByPlugin(vehicle_type);
 
-    const updateMarkers = (vehicleData) => {
-        const newMarkers = {};
-
-        vehicleData.forEach(vehicle => {
-            const { current_lat, current_lon, id, vehicle_type, battery_percentage, status } = vehicle;
-            const color = getColorByPlugin(vehicle_type);
-
-            if (markers.current[id]) {
-                // Update position and color if it already exists
-                markers.current[id].setLngLat([current_lon, current_lat]);
-                markers.current[id].getElement().style.backgroundColor = color;
-                newMarkers[id] = markers.current[id];
-            } else {
-                // Create a new div element for the custom marker
                 const el = document.createElement('div');
                 el.className = 'marker';
                 el.style.backgroundColor = color;
+                el.style.backgroundImage = `url(${CarIcon})`;
+                el.style.backgroundSize = '80%';
+                el.style.backgroundRepeat = 'no-repeat';
+                el.style.backgroundPosition = 'center';
                 el.style.width = '30px';
                 el.style.height = '30px';
-                el.style.borderRadius = '50%'; // Circular markers
+                el.style.borderRadius = '50%';
 
-                // Popup content, now including Vehicle ID
                 const popup = new mapboxgl.Popup({ offset: 25 }).setHTML(
-                    `<strong>Type:</strong> ${vehicle_type}<br>
-                     <strong>Battery:</strong> ${battery_percentage}%<br>
-                     <strong>Status:</strong> ${status}`
+                    `<strong>ID:</strong> ${_id}<br>` +
+                    `<strong>Type:</strong> ${vehicle_type}<br>` +
+                    `<strong>Battery:</strong> ${battery_percentage}%<br>` +
+                    `<strong>Status:</strong> ${status}`
                 );
 
                 const marker = new mapboxgl.Marker(el)
                     .setLngLat([current_lon, current_lat])
-                    .setPopup(popup)  // Attach popup to marker
+                    .setPopup(popup)
                     .addTo(map.current);
-                newMarkers[id] = marker;
-            }
-        });
 
-        // Remove old markers that were not updated
-        Object.keys(markers.current).forEach(id => {
-            if (!newMarkers[id]) {
-                markers.current[id].remove();
-            }
-        });
-
-        markers.current = newMarkers;
-    };
-
-    useEffect(() => {
-        const fetchDataAndUpdateMarkers = async () => {
-            const data = await fetchVehicleData();
-            updateMarkers(data);
+                vehicleMarkers.current[_id] = marker;
+            });
         };
 
-        fetchDataAndUpdateMarkers();
-        const intervalId = setInterval(fetchDataAndUpdateMarkers, 1000);
-        return () => clearInterval(intervalId);
+        const intervalId = setInterval(() => {
+            fetchVehicleData().then(updateVehicleMarkers);
+        }, 3000); // Update markers every 3 seconds
+
+        // Fetch and display battery markers once on load
+        fetchBatteryData().then(batteries => {
+            batteries.forEach(battery => {
+                const { lat, lon, _id } = battery;
+
+                const el = document.createElement('div');
+                el.className = 'marker';
+                el.style.backgroundColor = '#ad3d5f'; // Distinct color for batteries
+                el.style.backgroundImage = `url(${BatteryIcon})`;
+                el.style.backgroundSize = '80%';
+                el.style.backgroundRepeat = 'no-repeat';
+                el.style.backgroundPosition = 'center';
+                el.style.width = '30px';
+                el.style.height = '30px';
+                el.style.borderRadius = '50%';
+
+                const popup = new mapboxgl.Popup({ offset: 25 }).setHTML(
+                    `<strong>Charging Station</strong>`
+                );
+
+                new mapboxgl.Marker(el)
+                    .setLngLat([lon, lat])
+                    .setPopup(popup)
+                    .addTo(map.current);
+            });
+        });
+
+        return () => {
+            clearInterval(intervalId);
+            if (map.current) {
+                map.current.remove();
+                map.current = null;
+            }
+            Object.keys(vehicleMarkers.current).forEach(key => {
+                vehicleMarkers.current[key].remove();
+            });
+        };
     }, []);
 
     return (
-        <div style={{ width: '100%', height: '300px' }}>
-            <div ref={mapContainer} style={{ width: '100%', height: '100%', minWidth: '500px' }} />
+        <div style={{ width: '500px', height: '100%' }}>
+            <div ref={mapContainer} style={{ width: '100%', height: '300px' }} />
         </div>
     );
 };
 
 export default MapComponent;
+
+// Helper function to determine color based on vehicle type
+function getColorByPlugin(vehicleType) {
+    const colors = {
+        "ihaul": '#d68829',
+        "medmobile": '#0ec3cc',
+        "nomad": '#3abd5b',
+        default: 'grey',
+    };
+    return colors[vehicleType] || colors.default;
+}

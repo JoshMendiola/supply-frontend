@@ -4,7 +4,7 @@ import NomadIcon from "../images/icons/NomadIcon.png";
 import MedMobileIcon from "../images/icons/MedMobileIcon.png";
 import UnknownIcon from "../images/icons/UnknownIcon.png";
 
-function GetAllVehicles() {
+function LiveVehicleComponent() {
     const [vehicles, setVehicles] = useState([]);
 
     useEffect(() => {
@@ -116,4 +116,4 @@ function GetAllVehicles() {
     );
 }
 
-export default GetAllVehicles;
+export default LiveVehicleComponent;
