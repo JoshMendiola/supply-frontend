@@ -2,7 +2,7 @@ import {useAuth} from "../context/AuthContext.js";
 import {useState} from "react";
 import Login from "../components/Login.js";
 import Register from "../components/Register.js";
-import Sidebar from "../components/Sidebar";
+import Navbar from "../components/Navbar";
 import {useNavigate} from "react-router-dom";
 
 const Home = () => {
@@ -21,7 +21,7 @@ const Home = () => {
 
     return (
         <>
-            <Sidebar/>
+            <Navbar/>
             <div id="title-and-links" className="centered-flex">
                 <div className="title">
                     <h1 className="ihaul-style"> Fleet Management</h1>
