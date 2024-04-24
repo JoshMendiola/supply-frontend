@@ -4,25 +4,14 @@ import 'chart.js/auto';
 
 function TripsByPluginChart() {
     const [pendingTrips, setPendingTrips] = useState([]);
-    const [chartData, setChartData] = useState({
-        labels: [],
-        datasets: [{
-            label: 'Number of Pending Trips',
-            data: [],
-            backgroundColor: [
-                '#cf5c23',
-                '#3e83a8',
-                '#24962a',
-                '#000000'
-            ],
-            hoverBackgroundColor: [
-                '#cf5c23',
-                '#3e83a8',
-                '#24962a',
-                '#000000'
-            ]
-        }]
-    });
+
+    const colorMap = {
+        'Maintenance': '#ad3d5f',
+        'IHaul': '#3e83a8',
+        'MedMobile': '#3e83a8',
+        'Nomad': '#24962a',
+        'Unknown': '#000000'
+    };
 
     const chartOptions = {
         responsive: true,
@@ -65,6 +54,8 @@ function TripsByPluginChart() {
 
     const getPluginName = (pluginId) => {
         switch (pluginId) {
+            case -1:
+                return 'Maintenance';
             case 1:
                 return 'IHaul';
             case 2:
@@ -78,9 +69,12 @@ function TripsByPluginChart() {
 
     const updateChartData = (trips) => {
         const pluginCounts = {};
+        const backgroundColors = [];
         trips.forEach(trip => {
             const pluginName = getPluginName(trip.plugin);
             pluginCounts[pluginName] = (pluginCounts[pluginName] || 0) + 1;
+            // Ensure color mapping for each plugin
+            backgroundColors.push(colorMap[pluginName] || '#000000'); // Default to black if no mapping exists
         });
 
         setChartData({
@@ -88,11 +82,21 @@ function TripsByPluginChart() {
             datasets: [{
                 label: 'Number of Pending Trips',
                 data: Object.values(pluginCounts),
-                backgroundColor: chartData.datasets[0].backgroundColor.slice(0, Object.keys(pluginCounts).length),
-                hoverBackgroundColor: chartData.datasets[0].hoverBackgroundColor.slice(0, Object.keys(pluginCounts).length)
+                backgroundColor: backgroundColors,
+                hoverBackgroundColor: backgroundColors
             }]
         });
     };
+
+    const [chartData, setChartData] = useState({
+        labels: [],
+        datasets: [{
+            label: 'Number of Pending Trips',
+            data: [],
+            backgroundColor: [],
+            hoverBackgroundColor: []
+        }]
+    });
 
     return (
         <div style={{ height: '100%', width: '300px' }}> {/* Set height to control the size of the chart container */}

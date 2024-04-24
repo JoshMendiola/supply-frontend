@@ -1,10 +1,10 @@
 import React, { useEffect, useRef } from 'react';
 import mapboxgl from 'mapbox-gl';
 import { fetchVehicleData } from '../services/VehicleService';
-import { fetchBatteryData } from '../services/BatteryLocationService';
+import { fetchMaintenanceData } from '../services/MaintenanceLocationService';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import CarIcon from '../images/icons/CarIcon.png'; // Ensure this path is correct
-import BatteryIcon from '../images/icons/BatteryLocationIcon.png'; // Path to battery icon
+import MaintenanceIcon from '../images/icons/MaintenanceIcon.png'; // Path to maintenance icon
 
 mapboxgl.accessToken = 'pk.eyJ1Ijoiam9zaHVhbWVuZGlvbGFtYXAiLCJhIjoiY2x2NHIwcmFoMGNxYTJrcDVxM2dkejB1aCJ9.by1L5S6qb2NABCUvKcTQQA';
 
@@ -66,15 +66,15 @@ const MapComponent = () => {
         }, 3000); // Update markers every 3 seconds
 
         // Fetch and display battery markers once on load
-        fetchBatteryData().then(batteries => {
-            batteries.forEach(battery => {
-                const { lat, lon, _id } = battery;
+        fetchMaintenanceData().then(maintenance_zones => {
+            maintenance_zones.forEach(zone => {
+                const { lat, lon, _id } = zone;
 
                 const el = document.createElement('div');
                 el.className = 'marker';
-                el.style.backgroundColor = '#ad3d5f'; // Distinct color for batteries
-                el.style.backgroundImage = `url(${BatteryIcon})`;
-                el.style.backgroundSize = '80%';
+                el.style.backgroundColor = '#ad3d5f';
+                el.style.backgroundImage = `url(${MaintenanceIcon})`;
+                el.style.backgroundSize = '65%';
                 el.style.backgroundRepeat = 'no-repeat';
                 el.style.backgroundPosition = 'center';
                 el.style.width = '30px';
@@ -82,7 +82,7 @@ const MapComponent = () => {
                 el.style.borderRadius = '50%';
 
                 const popup = new mapboxgl.Popup({ offset: 25 }).setHTML(
-                    `<strong>Charging Station</strong>`
+                    `<strong>Maintenance Zone</strong>`
                 );
 
                 new mapboxgl.Marker(el)
